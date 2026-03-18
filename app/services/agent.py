@@ -65,12 +65,14 @@ def get_zodiac_sign(birth_date_str: str) -> str:
 
 @tool
 def astro_knowledge_search(query: str) -> str:
-    """Search the Vedic astrology knowledge base for factual information about
-    ZODIAC traits, PLANETARY impacts, CAREER guidance, LOVE guidance,
-    SPIRITUAL guidance, or NAKSHATRA mappings.
-    Use this tool ONLY when the user asks a factual astrology question
-    that requires specific knowledge. Do NOT use it for greetings,
-    follow-ups, summaries, or questions about previous conversation."""
+    """Search the Vedic astrology knowledge base for information, guidance,
+    predictions, or insights about ZODIAC traits, PLANETARY impacts,
+    CAREER guidance, LOVE guidance, SPIRITUAL guidance, or NAKSHATRA mappings.
+    You MUST use this tool whenever the user's question involves career,
+    love, relationships, health, spiritual growth, zodiac signs, planets,
+    or any astrological topic — including predictions and monthly/daily guidance.
+    Do NOT use it for greetings, follow-ups, summaries, or questions
+    about previous conversation."""
     results = retrieve_context(query, top_k=6)
     if not results:
         logger.info("No relevant astrological knowledge found.")
@@ -134,11 +136,12 @@ User Profile:
 
 Guidelines:
 1. Provide personalised astrological insights based on the user's zodiac sign and birth details.
-2. You have access to an astro_knowledge_search tool. Use it whenever:
-   - The user asks a factual question about planets, houses, signs, or transits.
-   - The user asks about CAREER, LOVE, or HEALTH from an astrological perspective.
-   - The user asks about Career guidance or predictions in career.
-3. Do NOT use the tool for:
+2. You have access to an astro_knowledge_search tool. You MUST ALWAYS use it when:
+   - The user asks about CAREER, LOVE, RELATIONSHIPS, HEALTH, or SPIRITUAL topics.
+   - The user asks for predictions, guidance, or monthly/daily insights.
+   - The user asks about planets, houses, signs, transits, or nakshatras.
+   - When in doubt about whether to retrieve, ALWAYS retrieve.
+3. Do NOT use the tool ONLY for:
    - Greetings, pleasantries, or general conversation.
    - Summarising previous responses.
    - Questions like "why are you saying this" that refer to conversation context.
