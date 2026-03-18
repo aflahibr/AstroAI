@@ -1,0 +1,47 @@
+{
+  "Sun": {
+    "description": "Represents identity, ego, self-expression and vitality.",
+    "nature": "benefic",
+    "influence": "opportunities"
+  },
+  "Moon": {
+    "description": "Represents emotions, inner world, intuition and nurturing energy.",
+    "nature": "benefic",
+    "influence": "opportunities"
+  },
+  "Mars": {
+    "description": "Represents ambition, drive, assertiveness and conflict.",
+    "nature": "malefic",
+    "influence": "challenges"
+  },
+  "Venus": {
+    "description": "Represents love, harmony, relationships and art.",
+    "nature": "benefic",
+    "influence": "opportunities"
+  },
+  "Mercury": {
+    "description": "Represents communication, logic, travel and intelligence.",
+    "nature": "neutral",
+    "influence": "context-dependent"
+  },
+  "Jupiter": {
+    "description": "Represents wisdom, growth, fortune and knowledge.",
+    "nature": "benefic",
+    "influence": "opportunities"
+  },
+  "Saturn": {
+    "description": "Represents discipline, responsibility, boundaries and lessons.",
+    "nature": "malefic",
+    "influence": "challenges"
+  },
+  "Rahu": {
+    "description": "Represents ambition, illusion, foreign influences and sudden events.",
+    "nature": "malefic",
+    "influence": "challenges"
+  },
+  "Ketu": {
+    "description": "Represents detachment, spirituality, past-life karma and liberation.",
+    "nature": "malefic",
+    "influence": "challenges"
+  }
+}

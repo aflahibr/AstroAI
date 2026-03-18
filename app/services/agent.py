@@ -62,11 +62,12 @@ def get_zodiac_sign(birth_date_str: str) -> str:
 @tool
 def astro_knowledge_search(query: str) -> str:
     """Search the Vedic astrology knowledge base for factual information about
-    planets, houses, zodiac signs, transits, or career/love guidance.
+    zodiac traits, planetary impacts, career guidance, love guidance,
+    spiritual guidance, or nakshatra mappings.
     Use this tool ONLY when the user asks a factual astrology question
     that requires specific knowledge. Do NOT use it for greetings,
     follow-ups, summaries, or questions about previous conversation."""
-    results = retrieve_context(query, top_k=4)
+    results = retrieve_context(query, top_k=6)
     if not results:
         return "No relevant astrological knowledge found."
     return "\n---\n".join(results)
