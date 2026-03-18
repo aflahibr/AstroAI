@@ -10,15 +10,21 @@ Features:
 import os
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
+import logging
+
+logger = logging.getLogger("astroai")
+logging.basicConfig(level=logging.INFO)
 
 # Path to the persisted ChromaDB directory relative to project root
-CHROMA_DB_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db")
+CHROMA_DB_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "chroma_db"
+)
 
 # Singleton vector store instance
 _vectorstore: Chroma | None = None
 
 # Similarity threshold — chunks scoring below this are discarded
-SIMILARITY_THRESHOLD = 0.3
+SIMILARITY_THRESHOLD = 0.15
 
 # Maximum total characters to return (context-window trimming)
 MAX_CONTEXT_CHARS = 2000
@@ -30,8 +36,7 @@ def get_vectorstore() -> Chroma:
     if _vectorstore is None:
         embeddings = OpenAIEmbeddings()
         _vectorstore = Chroma(
-            persist_directory=CHROMA_DB_DIR,
-            embedding_function=embeddings
+            persist_directory=CHROMA_DB_DIR, embedding_function=embeddings
         )
     return _vectorstore
 
@@ -89,5 +94,7 @@ def retrieve_context(
             break
         passages.append(content)
         total_chars += len(content)
+
+    logger.info(f"Retrieved Passages - {passages}")
 
     return passages
