@@ -102,11 +102,14 @@ AstroAI/
 │       ├── memory.py         # Redis session memory
 │       └── rag.py            # ChromaDB vector search
 ├── data/
-│   ├── vedic_astrology.txt   # Knowledge corpus
-│   ├── planetary_traits.json # Planet characteristics
-│   └── zodiac_personality.json # Zodiac sign traits
+│   ├── zodiac_traits.json     # 12 zodiac signs (personality/strengths/challenges)
+│   ├── planetary_impacts.json # Planetary descriptions + malefic/benefic nature
+│   ├── career_guidance.txt    # Career advice & planetary career influences
+│   ├── love_guidance.txt      # Relationship advice & planetary love influences
+│   ├── spiritual_guidance.txt # Spiritual advice & planetary spiritual influences
+│   └── nakshatra_mapping.json # 27 nakshatras (bonus)
 ├── scripts/
-│   └── ingest.py             # Data ingestion to ChromaDB
+│   └── ingest.py             # Data ingestion to ChromaDB (with metadata tagging)
 ├── Dockerfile
 ├── docker-compose.yml
 ├── pyproject.toml
@@ -117,8 +120,19 @@ AstroAI/
 
 ### Intent-Aware RAG
 The RAG tool is **bound to the LLM** via LangGraph tool-calling. The LLM itself decides when to invoke retrieval based on the tool's description. This avoids a separate classifier — the LLM's judgment determines:
-- **Retrieve**: Factual questions about planets, houses, signs, transits
+- **Retrieve**: Factual questions about zodiac traits, planetary impacts, career/love/spiritual guidance, nakshatras
 - **Skip retrieval**: Greetings, follow-ups, summaries, meta-questions
+
+### Knowledge Corpus & Retrieval
+- **Metadata tagging**: Every ingested document is tagged with `life_area`, `zodiac`, `planetary`, etc., enabling targeted filtered retrieval
+- **Similarity scoring**: Retrieved chunks below a configurable threshold (default `0.3`) are discarded
+- **Context-window trimming**: Total context returned is capped at 2000 characters to reduce token cost
+
+| Query | Sources Used |
+|---|---|
+| `"career + Aries"` | `career_guidance.txt` + `zodiac_traits.json` |
+| `"Venus affecting love"` | `planetary_impacts.json` + `love_guidance.txt` |
+| `"spiritual path for Taurus"` | `spiritual_guidance.txt` + `zodiac_traits.json` |
 
 ### Memory Control
 - **Windowing**: Only the last 10 turns are sent to the LLM context
