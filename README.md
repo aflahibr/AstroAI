@@ -21,6 +21,13 @@ Multi-turn conversational AI service for Vedic astrology, featuring RAG and conv
 - [Docker](https://docs.docker.com/get-docker/) & Docker Compose
 - OpenAI API key
 
+### Clone the Repository
+
+```bash
+git clone https://github.com/aflahibr/AstroAI.git
+cd AstroAI
+```
+
 ### Configure Environment
 
 ```bash
