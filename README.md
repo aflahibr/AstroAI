@@ -30,8 +30,14 @@ cd AstroAI
 
 ### Configure Environment
 
+##### Linux:
 ```bash
 cp .env.example .env
+# Edit .env and add your OPENAI_API_KEY
+```
+##### Windows CMD:
+```bash
+copy .env.example .env
 # Edit .env and add your OPENAI_API_KEY
 ```
 
