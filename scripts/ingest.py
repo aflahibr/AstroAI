@@ -26,7 +26,7 @@ def load_text_data(filepath: str, life_area: str) -> list[Document]:
     print(f"Loading {filepath}...")
     loader = TextLoader(filepath, encoding="utf-8")
     docs = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=350)
     chunks = text_splitter.split_documents(docs)
     for chunk in chunks:
         chunk.metadata["life_area"] = life_area
