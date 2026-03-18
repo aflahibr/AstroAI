@@ -22,6 +22,10 @@ from langgraph.graph import END, StateGraph
 from langgraph.prebuilt import ToolNode
 
 from app.services.rag import retrieve_context
+import logging
+
+logger = logging.getLogger("astroai")
+logging.basicConfig(level=logging.INFO)
 
 
 # ─────────────────────── Zodiac Utility ────────────────────────
@@ -62,13 +66,14 @@ def get_zodiac_sign(birth_date_str: str) -> str:
 @tool
 def astro_knowledge_search(query: str) -> str:
     """Search the Vedic astrology knowledge base for factual information about
-    zodiac traits, planetary impacts, career guidance, love guidance,
-    spiritual guidance, or nakshatra mappings.
+    ZODIAC traits, PLANETARY impacts, CAREER guidance, LOVE guidance,
+    SPIRITUAL guidance, or NAKSHATRA mappings.
     Use this tool ONLY when the user asks a factual astrology question
     that requires specific knowledge. Do NOT use it for greetings,
     follow-ups, summaries, or questions about previous conversation."""
     results = retrieve_context(query, top_k=6)
     if not results:
+        logger.info("No relevant astrological knowledge found.")
         return "No relevant astrological knowledge found."
     return "\n---\n".join(results)
 
@@ -131,7 +136,7 @@ Guidelines:
 1. Provide personalised astrological insights based on the user's zodiac sign and birth details.
 2. You have access to an astro_knowledge_search tool. Use it ONLY when:
    - The user asks a factual question about planets, houses, signs, or transits.
-   - The user asks about career, love, or health from an astrological perspective.
+   - The user asks about CAREER, LOVE, or HEALTH from an astrological perspective.
 3. Do NOT use the tool for:
    - Greetings, pleasantries, or general conversation.
    - Summarising previous responses.
@@ -147,6 +152,7 @@ def agent_node(state: AgentState) -> dict:
     system = SystemMessage(content=build_system_prompt(state))
     messages = [system] + state["messages"]
     response = llm.invoke(messages)
+    logger.info(f"Agent Node Used")
     return {"messages": [response]}
 
 
@@ -154,6 +160,7 @@ def tool_node(state: AgentState) -> dict:
     """Execute tool calls made by the LLM."""
     tool_executor = ToolNode([astro_knowledge_search])
     result = tool_executor.invoke(state)
+    logger.info(f"Tool Node Used")
 
     # Mark retrieval as used and track contexts
     context_used = state.get("context_used", [])
